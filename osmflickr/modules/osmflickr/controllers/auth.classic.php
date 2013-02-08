@@ -57,7 +57,7 @@ class authCtrl extends jController {
           $rep->body->assign('pages', (int) $photos_search['pages']);
           $rep->body->assign('page', (int) $photos_search['page']);
         } else {
-          $rep->body->assign('MAIN', 'Veuillez-vous identifié !');
+          $rep->body->assign('MAIN', 'Veuillez-vous identifier !');
         }
 
         return $rep;

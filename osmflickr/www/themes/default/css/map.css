@@ -673,13 +673,25 @@ body {
 }
 #map-content .lizmapPopupContent button.osmtag-add{
   background-color: transparent;
-  background-image : url("images/sprite_flickr.png");
-  width: 25px;
-  height:25px;
-  background-position : -25px 0px;
   border: none;
+  background: none;
 }
-#map-content .lizmapPopupContent button.osmtag-add:hover{
+#map-content .lizmapPopupContent button.osmtag-add span.text{
+  margin-left: 10px;
+}
+#map-content .lizmapPopupContent button.osmtag-add span.icon{
+  background-image : url("images/sprite_flickr.png");
+  height:25px;
+  width:25px;
+  background-position : -25px 0px;
+  transition: none;
+  display:inline-block;
+  vertical-align: bottom;
+}
+#map-content .lizmapPopupContent button.osmtag-add:hover span.text{
+  text-decoration: underline;
+}
+#map-content .lizmapPopupContent button.osmtag-add:hover span.icon{
   background-position : 0px -25px;
 }
 #map-content .lizmapPopupContent a{

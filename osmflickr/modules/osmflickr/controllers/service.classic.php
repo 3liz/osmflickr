@@ -109,11 +109,16 @@ class serviceCtrl extends jController {
       return $rep;
     }
 
-    $url = 'http://nominatim.openstreetmap.org/search.php?format=json&q='.$query;
+    $url = 'http://nominatim.openstreetmap.org/search.php?';
+    $params = array(
+      'q'=>$query,
+      'format'=>'json',
+    );
     $bbox = $this->param('bbox');
     if( preg_match('/\d+(\.\d+)?,\d+(\.\d+)?,\d+(\.\d+)?,\d+(\.\d+)?/',$bbox) )
-      $url .= '&viewbox='.$bbox;
+      $params['viewbox'] = $bbox;
 
+    $url .= http_build_query($params);
     $curl_handle = curl_init();
     curl_setopt($curl_handle, CURLOPT_URL, $url);
     curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, TRUE);
