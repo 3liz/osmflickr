@@ -1,0 +1,9 @@
+*.orig
+*.rej
+*~
+*.DS_Store
+*.o
+*.swp
+*.log
+
+temp/lizmap/www/*

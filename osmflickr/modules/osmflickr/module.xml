@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module xmlns="http://jelix.org/ns/module/1.0">
+    <info id="osmflickr@yourwebsite.undefined" name="osmflickr" createdate="2013-01-31">
+        <version date="2013-01-31">0.1pre</version>
+        <label lang="en_US">osmflickr</label>
+        <description lang="en_US" />
+        <license URL="">All rights reserved</license>
+        <copyright>2011 your name</copyright>
+        <creator name="your name" email="your-email@yourwebsite.undefined" active="true"/>
+        <!--<contributor name="hisname" email="hisemail@yoursite.undefined" active="true" since="" role=""/>-->
+        <homepageURL>http://www.yourwebsite.undefined</homepageURL>
+    </info>
+    <dependencies>
+        <jelix minversion="1.4.2" maxversion="1.4.*"/>
+    </dependencies>
+</module>
