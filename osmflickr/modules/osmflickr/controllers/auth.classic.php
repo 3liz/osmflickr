@@ -111,4 +111,16 @@ class authCtrl extends jController {
 
         return $rep;
     }
+
+    /**
+    *
+    */
+    function out() {
+      $f = jClasses::getService('osmflickr~phpFlickr');
+      $f->setOauthToken('','');
+      unset($_SESSION['FLICKR_USER']);
+      $rep = $this->getResponse('redirect');
+      $rep->action = 'osmflickr~default:index';
+      return $rep;
+    }
 }
