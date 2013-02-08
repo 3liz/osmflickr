@@ -38,9 +38,11 @@
 {jmessage_bootstrap}
 {$MAIN}
 <footer class="footer">
+  {if $page}
   <div class="pull-left">
     {pagelinks_flickr_bootstrap 'osmflickr~auth:index',array(),$pages,$page,'page',array('area-size'=>2)}
   </div>
+  {/if}
   <p class="pull-right">
     {image $j_basepath.'css/img/logo_footer.png'}
   </p>

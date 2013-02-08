@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form xmlns="http://jelix.org/ns/forms/1.1">
+  <input ref="q">
+    <label>Text</label>
+  </input>
+
+  <radiobuttons ref="hasgeo">
+      <label>Geotagged</label>
+      <item value="-1">None</item>
+      <item value="0">Without</item>
+      <item value="1">With</item>
+  </radiobuttons>
+
+  <hidden ref="search" defaultvalue="1" />
+
+  <submit ref="submit">
+    <label>Search</label>
+  </submit>
+
+  <submit ref="clear">
+    <label>Clear</label>
+  </submit>
+</form>

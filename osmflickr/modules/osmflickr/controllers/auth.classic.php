@@ -28,6 +28,18 @@ class authCtrl extends jController {
         //$rep->body->assignZone('MAIN', 'jelix~check_install');
 
         if ( $isConnected ) {
+          if ( $this->param('clear') != '' )
+            $form = jForms::destroy("osmflickr~search");
+          // Get the search form
+          $form = jForms::get("osmflickr~search");
+          if ( !$form ) {
+            $form = jForms::create("osmflickr~search");
+            $form->setData('hasgeo', -1);
+          }
+          // Init the search Form with the request
+          if ( $this->boolParam('search') && $this->param('clear') == '')
+            $form->initFromRequest();
+
           // Get the user images
           $search_params = array(
             "user_id"=>$user->nsid,
@@ -36,6 +48,11 @@ class authCtrl extends jController {
             //"has_geo"=>1, // for geotagged photos
             //"has_geo"=>0, // for not geotagged photos
           );
+
+          if ( $form->getData('q') != '' )
+            $search_params['text'] = $form->getData('q');
+          if ( $form->getData('hasgeo') != '-1' )
+            $search_params['has_geo'] = $form->getData('hasgeo');
 
           $page = $this->intParam('page');
           if ( $page )
@@ -52,6 +69,7 @@ class authCtrl extends jController {
             $photos[] = $photo;
           }
           $tpl = new jTpl();
+          $tpl->assign('form', $form);
           $tpl->assign('photos', $photos);
           $rep->body->assign('MAIN', $tpl->fetch('photos'));
           $rep->body->assign('pages', (int) $photos_search['pages']);
