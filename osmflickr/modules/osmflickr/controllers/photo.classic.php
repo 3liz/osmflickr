@@ -62,7 +62,7 @@ class photoCtrl extends jController {
         $rep->addJSCode("var cfgUrl = '".jUrl::get('osmflickr~photo:getProjectConfig')."';");
         $rep->addJSCode("var wmsServerURL = '".jUrl::get('osmflickr~photo:getCapabilities')."';");
         $rep->addJSCode("var osmUrl = '".jUrl::get('osmflickr~service:OpenStreetMap')."';");
-        $rep->addJSCode("var xapiUrl = '".jUrl::get('osmflickr~service:xapi')."';");
+        $rep->addJSCode("var mapapiUrl = '".jUrl::get('osmflickr~service:mapapi')."';");
         $rep->addJSCode("var nominatimUrl = '".jUrl::get('osmflickr~service:nominatim')."';");
 
         return $rep;

@@ -1370,7 +1370,7 @@ lizMap.events.on({
       "sketchcomplete": function(evt) {
         var b = evt.feature.geometry.getBounds().transform(map.getProjectionObject(), new OpenLayers.Projection('EPSG:4326'));
         $('#loading').dialog('open');
-        $.get(xapiUrl, {'bbox':b.toBBOX()}, function(data) {
+        $.get(mapapiUrl, {'bbox':b.toBBOX()}, function(data) {
           var tagLayer = map.getLayersByName('osmtag')[0];
           var osmLayer = map.getLayersByName('osmvector')[0];
           var osmFormat = new OpenLayers.Format.OSM({

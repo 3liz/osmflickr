@@ -56,6 +56,34 @@ class serviceCtrl extends jController {
     }
 
     $url = 'www.overpass-api.de/api/xapi?*[bbox='.$bbox.']';
+    $url = 'overpass.osm.rambler.ru/cgi/xapi?*[bbox='.$bbox.']';
+    $url = 'api.openstreetmap.org/api/0.6/map?bbox='.$bbox;
+
+    $curl_handle = curl_init();
+    curl_setopt($curl_handle, CURLOPT_URL, $url);
+    curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, TRUE);
+    curl_setopt($curl_handle, CURLOPT_HTTPHEADER, array('Expect:'));
+    $content = curl_exec($curl_handle);
+    curl_close($curl_handle);
+
+    $rep->content = $content;
+    return $rep;
+  }
+
+  /**
+   */
+  function mapapi() {
+    $rep = $this->getResponse('binary');
+    $rep->outputFileName = 'file.osm';
+    $rep->mimeType = 'text/xml';
+
+    $bbox = $this->param('bbox');
+    if( !preg_match('/\d+(\.\d+)?,\d+(\.\d+)?,\d+(\.\d+)?,\d+(\.\d+)?/',$bbox) ) {
+      $rep->content = '<osm></osm>';
+      return $rep;
+    }
+
+    $url = 'api.openstreetmap.org/api/0.6/map?bbox='.$bbox;
 
     $curl_handle = curl_init();
     curl_setopt($curl_handle, CURLOPT_URL, $url);
