@@ -1253,7 +1253,7 @@ function updateOsmTags() {
       var fid = self.parent().attr('id').replace('-','.');
       $('#loading').dialog('open');
       $.get(self.attr('href'), function(data) {
-        if (data == 'success') {
+        if (data.type == 'success') {
           var feat = osmtagLayer.getFeatureByFid( fid );
           var newFeat = feat.clone();
           newFeat.fid = feat.fid;
@@ -1261,10 +1261,10 @@ function updateOsmTags() {
           osmLayer.addFeatures([newFeat]);
           osmtagLayer.destroyFeatures([feat]);
           updateOsmTags();
-        } else 
-          $('#loading').dialog('close');
-        alert(data);
-      });
+        } 
+        $('#loading').dialog('close');
+        $('#message').html('<div class="alert alert-block alert-'+data.type+' fade in" data-alert="alert"><a class="close" data-dismiss="alert" href="#">×</a><p>'+data.message+'</p></div>');
+      }, 'json');
       $('#loading').dialog('close');
       return false;
     });
@@ -1329,7 +1329,7 @@ lizMap.events.on({
       $('#loading').dialog('open');
       $.get(self.attr('href'), function(data) {
         $('#loading').dialog('close');
-        if (data == 'success') {
+        if (data.type == 'success') {
           var feat = osmtagLayer.getFeatureByFid( fid );
           var newFeat = feat.clone();
           newFeat.fid = feat.fid;
@@ -1337,10 +1337,10 @@ lizMap.events.on({
           osmLayer.addFeatures([newFeat]);
           osmtagLayer.destroyFeatures([feat]);
           updateOsmTags();
-        } else 
-          $('#loading').dialog('close');
-        alert(data);
-      });
+        } 
+        $('#loading').dialog('close');
+        $('#message').html('<div class="alert alert-block alert-'+data.type+' fade in" data-alert="alert"><a class="close" data-dismiss="alert" href="#">×</a><p>'+data.message+'</p></div>');
+      }, 'json');
       return false;
     });
   }
@@ -1371,7 +1371,7 @@ lizMap.events.on({
         var b = evt.feature.geometry.getBounds().transform(map.getProjectionObject(), new OpenLayers.Projection('EPSG:4326'));
         // limit the size of the bbox
         if (b.getWidth()*b.getHeight() > 0.00001) {
-          alert('The extent is too big!');
+          $('#message').html('<div class="alert alert-block alert-error fade in" data-alert="alert"><a class="close" data-dismiss="alert" href="#">×</a><p>'+dict['osm.load.extent.toobig']+'</p><p>'+dict['osm.load.extent.smaller']+'</p></div>');
           return false;
         }
 
@@ -1431,11 +1431,11 @@ lizMap.events.on({
           var fid = feat.fid.split('.');
           var text = '<h4>OSM element '+fid[0]+'</h4>';
           text += '<div class="lizmapPopupDiv">';
-          text += '<button class="btn osmtag-add" title="Add"><span class="icon"></span><span class="text">Ajouter à la liste des liens</span></button>'
+          text += '<button class="btn osmtag-add" title="Add"><span class="icon"></span><span class="text">'+dict['osm.tagmachine.add']+'</span></button>'
           text += '<table class="lizmapPopupTable">';
           text += '<thead><tr><th class="left">key</th><th>value</th></tr></thead>';
           text += '<tbody>';
-          var urlRegex = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
+          var urlRegex = /^(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
           var emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/;
           var imageRegex = /\.(jpg|jpeg|png|gif|bmp)$/i;
           var attr = feat.attributes;
@@ -1496,17 +1496,19 @@ lizMap.events.on({
             var tag = 'osm:'+fid[0]+'='+fid[1];
             $('#loading').dialog('open');
             $.get(addTagUrl, {'tag':tag}, function(data) {
-              $('#loading').dialog('close');
               map.removePopup(popup);
               selectOsm.unselectAll();
-              var newFeat = feat.clone();
-              newFeat.fid = feat.fid;
-              newFeat.osm_id = feat.osm_id;
-              map.getLayersByName('osmtag')[0].addFeatures([newFeat]);
-              feat.layer.destroyFeatures([feat]);
-              updateOsmTags();
-              alert(data);
-            });
+              if (data.type == 'success') {
+                var newFeat = feat.clone();
+                newFeat.fid = feat.fid;
+                newFeat.osm_id = feat.osm_id;
+                map.getLayersByName('osmtag')[0].addFeatures([newFeat]);
+                feat.layer.destroyFeatures([feat]);
+                updateOsmTags();
+              }
+              $('#loading').dialog('close');
+              $('#message').html('<div class="alert alert-block alert-'+data.type+' fade in" data-alert="alert"><a class="close" data-dismiss="alert" href="#">×</a><p>'+data.message+'</p></div>');
+            },'json');
           });
         }
     });

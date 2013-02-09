@@ -75,7 +75,7 @@ class authCtrl extends jController {
           $rep->body->assign('pages', (int) $photos_search['pages']);
           $rep->body->assign('page', (int) $photos_search['page']);
         } else {
-          $rep->body->assign('MAIN', 'Veuillez-vous identifier !');
+          $rep->body->assign('MAIN', jLocale::get("osmflickr~default.message.auth.identify"));
         }
 
         return $rep;
@@ -88,46 +88,35 @@ class authCtrl extends jController {
       $f = jClasses::getService('osmflickr~phpFlickr');
       if (! $f->isConnected() ) {
         $callback = jUrl::getFull('osmflickr~auth:in_callback');
-        jLog::log('callback='.$callback,'debug');
         $url = $f->getRequestToken($callback);
         if ($url) {
           $rep = $this->getResponse('redirectUrl');
           $rep->url = $url;
           return $rep;
         } else {
-          jLog::log('error_code='.$f->getErrorCode(),'debug');
-          jLog::log('error_msg='.json_encode($f->getErrorMsg()),'debug');
+          jMessage($f->getErrorCode().': '.implode(',', $f->getErrorMsg()), 'error');
+          $rep = $this->getResponse('redirect');
+          $rep->action = 'osmflickr~default:index';
+          return $rep;
         }
       }
-        $rep = $this->getResponse('html');
-
-        // this is a call for the 'welcome' zone after creating a new application
-        // remove this line !
-        $rep->body->assignZone('MAIN', 'jelix~check_install');
-
-        return $rep;
+      $rep = $this->getResponse('redirect');
+      $rep->action = 'osmflickr~auth:index';
+      return $rep;
     }
 
     /**
     *
     */
     function in_callback() {
+      $rep = $this->getResponse('redirect');
       $f = jClasses::getService('osmflickr~phpFlickr');
       if ( ! $f->getAccessToken() ) {
-        jLog::log('error_code='.$f->getErrorCode(),'debug');
-        jLog::log('error_msg='.json_encode($f->getErrorMsg()),'debug');
+        jMessage($f->getErrorCode().': '.implode(',', $f->getErrorMsg()), 'error');
+        $rep->action = 'osmflickr~default:index';
       }
-      $rep = $this->getResponse('redirect');
-      $rep->action = 'osmflickr~default:index';
+      $rep->action = 'osmflickr~auth:index';
       return $rep;
-
-      $rep = $this->getResponse('html');
-
-        // this is a call for the 'welcome' zone after creating a new application
-        // remove this line !
-        $rep->body->assignZone('MAIN', 'jelix~check_install');
-
-        return $rep;
     }
 
     /**

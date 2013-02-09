@@ -17,7 +17,7 @@ class photoCtrl extends jController {
 
         $isConnected = $f->isConnected();
         if ( ! $isConnected ) {
-          jMessage::add('not connected', 'error');
+          jMessage::add(jLocale::get("osmflickr~default.message.auth.identify"), 'error');
           $rep = $this->getResponse('redirect');
           $rep->action = 'osmflickr~default:index';
           return $rep;
@@ -25,7 +25,7 @@ class photoCtrl extends jController {
 
         $photo_id = $this->param('photo_id');
         if ( !$photo_id ) {
-          jMessage::add('photo_id not found', 'error');
+          jMessage::add(jLocale::get("osmflickr~default.message.auth.photo_id"), 'error');
           $rep = $this->getResponse('redirect');
           $rep->action = 'osmflickr~default:index';
           return $rep;
@@ -34,6 +34,7 @@ class photoCtrl extends jController {
         $secret = $this->param('secret');
 
         $rep = $this->getResponse('htmlmap');
+        $rep->addJSLink(jUrl::get('osmflickr~translate:index'));
 
         $user = $f->getUserSession();
 
@@ -46,7 +47,6 @@ class photoCtrl extends jController {
         $rep->title = 'OsmFlickr - '.$photo->title;
 
         $rep->body->assign('photo', $photo);
-        jLog::log(json_encode($photo->info),'debug');
         
         $tpl = new jTpl();
         $tpl->assign('photo', $photo);
@@ -58,7 +58,7 @@ class photoCtrl extends jController {
 
         // Add the json config as a javascript variable
         $rep->addJSCode("var addTagUrl = '".jUrl::get('osmflickr~photo:addTag',array('photo_id'=>$photo_id))."';");
-        $rep->addJSCode("var getOsmTagsUrl = '".jUrl::get('osmflickr~photo:getOsmTags',array('photo_id'=>$photo_id,'secret'=>$secrect))."';");
+        $rep->addJSCode("var getOsmTagsUrl = '".jUrl::get('osmflickr~photo:getOsmTags',array('photo_id'=>$photo_id,'secret'=>$secret))."';");
         $rep->addJSCode("var cfgUrl = '".jUrl::get('osmflickr~photo:getProjectConfig')."';");
         $rep->addJSCode("var wmsServerURL = '".jUrl::get('osmflickr~photo:getCapabilities')."';");
         $rep->addJSCode("var osmUrl = '".jUrl::get('osmflickr~service:OpenStreetMap')."';");
@@ -154,59 +154,81 @@ class photoCtrl extends jController {
   }
 
   function addTag() {
-    $rep = $this->getResponse('binary');
-    $rep->addHttpHeader ("mime/type", "text/plain");
+    $rep = $this->getResponse('json');
 
     $f = jClasses::getService('osmflickr~phpFlickr');
 
     $isConnected = $f->isConnected();
     if ( ! $isConnected ) {
-      $rep->content = 'not connected';
+      $rep->data = array(
+        'type' => 'error',
+        'message' => jLocale::get("osmflickr~default.message.auth.identify")
+      );
       return $rep;
     }
 
     $photo_id = $this->param('photo_id');
     if ( !$photo_id ) {
-      $rep->content = 'photo_id not found';
+      $rep->content = jLocale::get("osmflickr~default.message.photo.photo_id");
       return $rep;
     }
 
     $tag = $this->param('tag');
     if ( !$photo_id ) {
-      $rep->content = 'tag is mandatory';
+      $rep->data = array(
+        'type' => 'error',
+        'message' => jLocale::get("osmflickr~default.message.photo.tag")
+      );
       return $rep;
     }
 
     if ( $f->photos_addTags($photo_id, $tag) )
-      $rep->content = 'success';
+      $rep->data = array(
+        'type' => 'success',
+        'message' => jLocale::get("osmflickr~default.message.photo.addTag.success")
+      );
     else
-      $rep->content = 'fail';
+      $rep->data = array(
+        'type' => 'error',
+        'message' => jLocale::get("osmflickr~default.message.photo.addTag.fail")
+      );
 
     return $rep;
   }
 
   function removeTag() {
-    $rep = $this->getResponse('binary');
-    $rep->addHttpHeader ("mime/type", "text/plain");
+    $rep = $this->getResponse('json');
 
     $f = jClasses::getService('osmflickr~phpFlickr');
 
     $isConnected = $f->isConnected();
     if ( ! $isConnected ) {
-      $rep->content = 'not connected';
+      $rep->data = array(
+        'type' => 'error',
+        'message' => jLocale::get("osmflickr~default.message.auth.identify")
+      );
       return $rep;
     }
 
     $tag_id = $this->param('tag_id');
     if ( !$tag_id ) {
-      $rep->content = 'tag_id not found';
+      $rep->data = array(
+        'type' => 'error',
+        'message' => jLocale::get("osmflickr~default.message.photo.tag")
+      );
       return $rep;
     }
 
     if ( $f->photos_removeTag($tag_id) )
-      $rep->content = 'success';
+      $rep->data = array(
+        'type' => 'success',
+        'message' => jLocale::get("osmflickr~default.message.photo.removeTag.success")
+      );
     else
-      $rep->content = 'fail';
+      $rep->data = array(
+        'type' => 'error',
+        'message' => jLocale::get("osmflickr~default.message.photo.removeTag.fail")
+      );
 
     return $rep;
   }
@@ -217,13 +239,13 @@ class photoCtrl extends jController {
 
     $isConnected = $f->isConnected();
     if ( ! $isConnected ) {
-      jMessage::add('not connected', 'error');
+      jMessage::add(jLocale::get("osmflickr~default.message.auth.identify"), 'error');
       return $rep;
     }
 
     $photo_id = $this->param('photo_id');
     if ( !$photo_id ) {
-      jMessage::add('photo_id not found', 'error');
+      jMessage::add(jLocale::get("osmflickr~default.message.photo.photo_id"), 'error');
       return $rep;
     }
     jClasses::inc('osmflickr~flickrPhoto');

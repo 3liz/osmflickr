@@ -2,14 +2,14 @@
   <h3><span class="title">{$photo->title}</span></h3>
   <div class="menu-content">
     <div id="photo-info">
-      <a href="{$photo->getPhotopageURL()}" target="_blank">
+      <a href="{$photo->getPhotopageURL()}" target="_blank" title="{@osmflickr~map.photo.info.link@}">
         <img src="{$photo->buildURL('medium')}" alt="{$photo->title}">
       </a>
       <div id="photo-info-content">
       <p id="photo-info-desc">{$photo->info['description']}</p>
       {if $photo->hasLocation()}
       {assign $loc = $photo->getLocation()}
-      <p id="photo-info-loc">Cette photo a été prise à {$loc->locality}, {$loc->county}, {$loc->region}, {$loc->country}</p>
+      <p id="photo-info-loc">{@osmflickr~map.photo.info.taken@} {$loc->locality}, {$loc->county}, {$loc->region}, {$loc->country}</p>
       <script type="text/javascript">
       {literal}
         lizMap.events.on({
@@ -43,7 +43,7 @@
       </script>
       {/if}
       {if $photo->hasSimpleTags()}
-      <div>Tags
+      <div>{@osmflickr~map.photo.info.tags@}
       <ul class="inline">
       {foreach $photo->getSimpleTags() as $t}
         <li>{$t->title}</li>

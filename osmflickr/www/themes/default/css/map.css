@@ -757,3 +757,10 @@ body {
   background : black;
 }
 
+#message {
+  top : 0;
+  left : 0;
+  position : absolute;
+  z-index : 1000;
+  white-space: nowrap;
+}

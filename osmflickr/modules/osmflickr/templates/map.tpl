@@ -12,10 +12,10 @@
   <div id="auth" class="navbar-inner">
   <div class="pull-right">
     <form id="nominatim-search" class="navbar-search pull-left dropdown">
-      <input id="search-query" type="text" class="search-query" placeholder="Nominatim Search"></input>
+      <input id="search-query" type="text" class="search-query" placeholder="{@osmflickr~map.search.nominatim.placeholder@}"></input>
       <span class="search-icon">
         <button class="icon nav-search" type="submit" tabindex="-1">
-          <span>Search</span>
+          <span>{@osmflickr~map.search.nominatim.button@}</span>
         </button>
       </span>
       <div class="dropdown-menu pull-right">
@@ -106,6 +106,7 @@
       <span id="attribution"></span>
       {image $j_basepath.'css/img/logo_footer.png'}
     </div>
+    <div id="message">{jmessage_bootstrap}</div>
   </div>
 </div>
 
