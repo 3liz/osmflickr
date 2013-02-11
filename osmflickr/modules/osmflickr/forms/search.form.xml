@@ -11,7 +11,15 @@
       <item value="1">With</item>
   </radiobuttons>
 
+  <radiobuttons ref="hasosm">
+      <label>OSMtagged</label>
+      <item value="-1">None</item>
+      <item value="0">Without</item>
+      <item value="1">With</item>
+  </radiobuttons>
+
   <hidden ref="search" defaultvalue="1" />
+  <hidden ref="page" defaultvalue="1" />
 
   <submit ref="submit">
     <label>Search</label>

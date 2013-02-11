@@ -53,6 +53,7 @@ class flickrPhoto {
       //file size exists)
       $sizes = array(
         "square" => "_s",
+        "lsquare" => "_q",
         "thumbnail" => "_t",
         "small" => "_m",
         "medium" => "",

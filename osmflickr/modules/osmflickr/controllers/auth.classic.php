@@ -28,35 +28,43 @@ class authCtrl extends jController {
         //$rep->body->assignZone('MAIN', 'jelix~check_install');
 
         if ( $isConnected ) {
-          if ( $this->param('clear') != '' )
-            $form = jForms::destroy("osmflickr~search");
           // Get the search form
           $form = jForms::get("osmflickr~search");
           if ( !$form ) {
             $form = jForms::create("osmflickr~search");
             $form->setData('hasgeo', -1);
+            $form->setData('hasosm', -1);
           }
-          // Init the search Form with the request
-          if ( $this->boolParam('search') && $this->param('clear') == '')
-            $form->initFromRequest();
+          if ( $this->intParam('page') )
+            $form->setData('page', $this->param('page') );
 
           // Get the user images
           $search_params = array(
             "user_id"=>$user->nsid,
+            //"user_id"=>"me",
+            //"safe_search"=>"2",
             "per_page"=>30,
             "content_type"=>1,  // for photos only
             //"has_geo"=>1, // for geotagged photos
             //"has_geo"=>0, // for not geotagged photos
+            //"machine_tags"=>"osm:",
           );
 
-          if ( $form->getData('q') != '' )
-            $search_params['text'] = $form->getData('q');
+          if ( $form->getData('hasosm') == '1' )
+            $search_params['text'] = 'osm:%=%';
+          else if ( $form->getData('hasosm') == '0' )
+            $search_params['text'] = '-osm:%=%';
+          if ( $form->getData('q') != '' ) {
+            if ( isset($search_params['text']) )
+              $search_params['text'] .= ' '.$form->getData('q');
+            else
+              $search_params['text'] = $form->getData('q');
+          }
+          jLog::log(json_encode($search_params),'debug');
           if ( $form->getData('hasgeo') != '-1' )
             $search_params['has_geo'] = $form->getData('hasgeo');
-
-          $page = $this->intParam('page');
-          if ( $page )
-            $search_params['page'] = $page;
+          if ( $form->getData('page') != '1' )
+            $search_params['page'] = $form->getData('page');
 
           $photos_search = $f->photos_search($search_params);
 
@@ -79,6 +87,30 @@ class authCtrl extends jController {
         }
 
         return $rep;
+    }
+
+    /**
+    *
+    */
+    function search() {
+      if ( $this->param('clear') != '' )
+        $form = jForms::destroy("osmflickr~search");
+      // Get the search form
+      $form = jForms::get("osmflickr~search");
+      if ( !$form ) {
+        $form = jForms::create("osmflickr~search");
+        $form->setData('hasgeo', -1);
+        $form->setData('hasosm', '-1');
+      }
+      // Init the search Form with the request
+      if ( $this->boolParam('search') && $this->param('clear') == '')
+        $form->initFromRequest();
+      if ( $this->intParam('page') )
+        $form->setData('page', $this->param('page') );
+
+      $rep = $this->getResponse('redirect');
+      $rep->action = 'osmflickr~auth:index';
+      return $rep;
     }
 
     /**
