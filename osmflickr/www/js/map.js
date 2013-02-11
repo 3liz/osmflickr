@@ -1380,6 +1380,7 @@ lizMap.events.on({
           var tagLayer = map.getLayersByName('osmtag')[0];
           var osmLayer = map.getLayersByName('osmvector')[0];
           var osmFormat = new OpenLayers.Format.OSM({
+            checkTags:true,
             externalProjection: new OpenLayers.Projection('EPSG:4326'),
             internalProjection: map.getProjectionObject()
           });
