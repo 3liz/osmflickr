@@ -42,6 +42,7 @@ class myHtmlMapResponse extends jResponseHtml {
     $this->addJSLink($bp.'OpenLayers-2.12/lib/OpenLayers/Control/ScaleLine.js');
     $this->addJSLink($bp.'Proj4js/proj4js-compressed.js');
     $this->addJSLink($bp.'js/jquery-1.8.0.min.js');
+    $this->addJSLink($bp.'js/jquery.cookie.js');
     $this->addJSLink($bp.'js/bootstrap.js');
     $this->addJSLink($bp.'js/jquery-ui-1.8.23.custom.min.js');
     $this->addJSLink($bp.'js/map.js');
