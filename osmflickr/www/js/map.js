@@ -1585,7 +1585,6 @@ lizMap.events.on({
 
     map.events.on({
       moveend : function() {
-        console.log(map.getExtent().transform(map.getProjectionObject(), new OpenLayers.Projection('EPSG:4326')).toBBOX());
         $.cookie('bbox',map.getExtent().transform(map.getProjectionObject(), new OpenLayers.Projection('EPSG:4326')).toBBOX());
       }
     });
