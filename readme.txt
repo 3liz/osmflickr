@@ -15,6 +15,7 @@ It's based on some OpenSource project :
 * Bootstrap http://twitter.github.com/bootstrap/
 * Jelix http://jelix.org
 * phpFlickr http://phpflickr.com/
+* lizMap
 
 ******  LICENSE  *****
 Version: MPL 2.0
