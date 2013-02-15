@@ -1,15 +1,15 @@
 /**
-* Class: lizMap
-* @package   lizmap
-* @subpackage view
+* Class: ofMap
+* @package   osmflickr
+* @subpackage osmflickr
 * @author    3liz
-* @copyright 2011 3liz
+* @copyright 2013 3liz
 * @link      http://3liz.com
 * @license    Mozilla Public License : http://www.mozilla.org/MPL/
 */
 
 
-var lizMap = function() {
+var ofMap = function() {
   /**
    * PRIVATE Property: config
    * {object} The map config
@@ -923,7 +923,7 @@ var lizMap = function() {
 
 
 
-  // creating the lizMap object
+  // creating the ofMap object
   var obj = {
     /**
      * Property: map
@@ -943,7 +943,7 @@ var lizMap = function() {
     /**
      * Property: events
      * {<OpenLayers.Events>} An events object that handles all
-     *                       events on the lizmap
+     *                       events on the ofMap
      */
     events: null,
     /**
@@ -1069,7 +1069,7 @@ var lizMap = function() {
       });
     }
   };
-  // initializing the lizMap events
+  // initializing the ofMap events
   obj.events = new OpenLayers.Events(
       obj, null,
       ['treecreated','mapcreated','layersadded','uicreated'],
@@ -1083,7 +1083,7 @@ var lizMap = function() {
  * before the document is ready
  * but after this file
  */
-lizMap.events.on({
+ofMap.events.on({
     'treecreated':function(evt){
        //console.log('treecreated');
        if ((('osmMapnik' in evt.config.options) && evt.config.options.osmMapnik == 'True') ||
@@ -1237,6 +1237,6 @@ $(document).ready(function () {
   .children('.ui-dialog-titlebar').removeClass('ui-corner-all');
   // configurate OpenLayers
   OpenLayers.DOTS_PER_INCH = 96;
-  // initialize LizMap
-  lizMap.init();
+  // initialize ofMap
+  ofMap.init();
 });

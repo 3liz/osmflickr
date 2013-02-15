@@ -3,7 +3,7 @@
 
 <div id="header">
   <div id="logo">
-    <h1>OpenStreetMap - Flickr</h1>
+    <h1>OsmFlickr</h1>
   </div>
 </div>
 

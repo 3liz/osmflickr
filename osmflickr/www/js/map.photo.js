@@ -3,7 +3,7 @@ function updateOsmTags() {
   $.get(getOsmTagsUrl,function(data) {
     $('#osmtagbar').replaceWith(data);
     $(window).resize();
-    var map = lizMap.map;
+    var map = ofMap.map;
     var osmtagLayer = map.getLayersByName('osmtag')[0];
     var osmLayer = map.getLayersByName('osmvector')[0];
     $('#osmtagbar ul.inline li a.delete-x').click(function() {
@@ -30,7 +30,7 @@ function updateOsmTags() {
 }
 
 // Flickr Photo
-lizMap.events.on({
+ofMap.events.on({
   'layersadded':function(evt){
     var map = evt.map;
 
@@ -219,11 +219,11 @@ lizMap.events.on({
           if (map.popups.length != 0)
             map.removePopup(map.popups[0]);
 
-          OpenLayers.Popup.LizmapAnchored = OpenLayers.Class(OpenLayers.Popup.Anchored, {
+          OpenLayers.Popup.ofMapAnchored = OpenLayers.Class(OpenLayers.Popup.Anchored, {
             'displayClass': 'olPopup lizmapPopup'
             ,'contentDisplayClass': 'olPopupContent lizmapPopupContent'
           });
-          var popup = new OpenLayers.Popup.LizmapAnchored(
+          var popup = new OpenLayers.Popup.ofMapAnchored(
               "liz_layer_popup",
               map.getLonLatFromPixel(selectOsm.handlers.feature.down),
               null,

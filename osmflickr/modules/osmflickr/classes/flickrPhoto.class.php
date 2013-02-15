@@ -1,4 +1,13 @@
 <?php
+/**
+* a Flickr photo class
+* @package   osmflickr
+* @subpackage osmflickr
+* @author    3Liz
+* @copyright 2013 3liz
+* @link      http://www.3liz.com
+* @license    Mozilla Public License : http://www.mozilla.org/MPL/
+*/
 class flickrPhoto {
     public $id = '';
     public $owner = '';

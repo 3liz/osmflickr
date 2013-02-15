@@ -1,6 +1,6 @@
 
 // Flickr Photos
-lizMap.events.on({
+ofMap.events.on({
   'layersadded':function(evt){
     var map = evt.map;
 
@@ -112,7 +112,7 @@ lizMap.events.on({
         if ( $('#liz_layer_popup_'+feat.fid).length !=0 )
           return true;
           var text = '<h4>'+feat.attributes.title+'</h4>';
-          text += '<div class="lizmapPopupDiv">';
+          text += '<div class="ofMapPopupDiv">';
           text += '<a href="http://www.flickr.com/photos/'+feat.attributes.owner+'/'+feat.attributes.id+'" class="thumbnail" title="'+feat.attributes.title+'" target="_blank">';
           text += '<img src="'+feat.attributes.url_s+'" alt="">';
           text += '</a>';
@@ -134,11 +134,11 @@ lizMap.events.on({
           if (map.popups.length != 0)
             map.removePopup(map.popups[0]);
 
-          OpenLayers.Popup.LizmapAnchored = OpenLayers.Class(OpenLayers.Popup.Anchored, {
-            'displayClass': 'olPopup lizmapPopup'
-            ,'contentDisplayClass': 'olPopupContent lizmapPopupContent'
+          OpenLayers.Popup.ofMapAnchored = OpenLayers.Class(OpenLayers.Popup.Anchored, {
+            'displayClass': 'olPopup ofMapPopup'
+            ,'contentDisplayClass': 'olPopupContent ofMapPopupContent'
           });
-          var popup = new OpenLayers.Popup.LizmapAnchored(
+          var popup = new OpenLayers.Popup.ofMapAnchored(
               "liz_layer_popup_"+feat.fid,
               feat.geometry.getBounds().getCenterLonLat(),
               null,

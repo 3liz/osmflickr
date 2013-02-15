@@ -1,17 +1,18 @@
 <?php
 /**
+* The user controller
 * @package   osmflickr
 * @subpackage osmflickr
-* @author    DHONT René-Luc
-* @copyright 2011 DHONT René-Luc
+* @author    3Liz
+* @copyright 2013 3liz
 * @link      http://www.3liz.com
-* @license    All rights reserved
+* @license    Mozilla Public License : http://www.mozilla.org/MPL/
 */
 
 
 class authCtrl extends jController {
     /**
-    *
+    * The photos user page
     */
     function index() {
         $rep = $this->getResponse('html');
@@ -22,10 +23,6 @@ class authCtrl extends jController {
 
         $rep->body->assign('isConnected', $isConnected);
         $rep->body->assign('user', $user);
-
-        // this is a call for the 'welcome' zone after creating a new application
-        // remove this line !
-        //$rep->body->assignZone('MAIN', 'jelix~check_install');
 
         if ( $isConnected ) {
           // Get the search form
@@ -94,7 +91,7 @@ class authCtrl extends jController {
     }
 
     /**
-    *
+    * Search in the photos user
     */
     function search() {
       if ( $this->param('clear') != '' )
@@ -118,7 +115,7 @@ class authCtrl extends jController {
     }
 
     /**
-    *
+    * the log in
     */
     function in() {
       $f = jClasses::getService('osmflickr~phpFlickr');
@@ -142,7 +139,7 @@ class authCtrl extends jController {
     }
 
     /**
-    *
+    * The Flickr log in callback
     */
     function in_callback() {
       $rep = $this->getResponse('redirect');
@@ -156,7 +153,7 @@ class authCtrl extends jController {
     }
 
     /**
-    *
+    * The log out
     */
     function out() {
       $f = jClasses::getService('osmflickr~phpFlickr');

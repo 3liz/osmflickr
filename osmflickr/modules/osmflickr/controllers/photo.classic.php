@@ -1,16 +1,17 @@
 <?php
 /**
+* The photo edition controller
 * @package   osmflickr
 * @subpackage osmflickr
-* @author    DHONT René-Luc
-* @copyright 2011 DHONT René-Luc
+* @author    3Liz
+* @copyright 2013 3liz
 * @link      http://www.3liz.com
-* @license    All rights reserved
+* @license    Mozilla Public License : http://www.mozilla.org/MPL/
 */
 
 class photoCtrl extends jController {
     /**
-    *
+    * The photo map
     */
     function index() {
         $f = jClasses::getService('osmflickr~phpFlickr');
@@ -71,11 +72,10 @@ class photoCtrl extends jController {
         return $rep;
     }
 
-    /**
-     * Return the default GetCapabilities.
+ /**
+  * Return the default GetCapabilities.
   * @param string $REQUEST Name of the request.
-  * @param integer $tree_id Id of the tree.
-  * @return Json string containing the project options.
+  * @return XML a WMS GetCapapbilities.
   */
   function getCapabilities() {
 
@@ -133,6 +133,7 @@ class photoCtrl extends jController {
 
     # default values
     $bbox = '-85.0,-85.0,85.0,85.0';
+    # use the cookie
     if ( isset($_COOKIE['bbox']) && preg_match('/\d+(\.\d+)?,\d+(\.\d+)?,\d+(\.\d+)?,\d+(\.\d+)?/',$_COOKIE['bbox']) )
       $bbox = $_COOKIE['bbox'];
 
@@ -158,6 +159,12 @@ class photoCtrl extends jController {
     return $rep;
   }
 
+  /**
+  * Add a tag to the photo
+  * @param text $photo_id The photo Flickr id
+  * @param text $tag The tag to add
+  * @return Json string containing the message.
+  */
   function addTag() {
     $rep = $this->getResponse('json');
 
@@ -201,6 +208,11 @@ class photoCtrl extends jController {
     return $rep;
   }
 
+  /**
+  * Remove a tag to the photo
+  * @param text $tag_id The tag id to remove
+  * @return Json string containing the message.
+  */
   function removeTag() {
     $rep = $this->getResponse('json');
 
@@ -238,6 +250,12 @@ class photoCtrl extends jController {
     return $rep;
   }
 
+  /**
+  * The osm photo tags list as HTML fragment
+  * @param text $photo_id The photo Flickr id
+  * @param text $secret The photo Flickr secret
+  * @return HTML fragment.
+  */
   function getOsmTags() {
     $rep = $this->getResponse('htmlfragment');
     $f = jClasses::getService('osmflickr~phpFlickr');

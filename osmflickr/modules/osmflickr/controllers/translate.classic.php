@@ -1,10 +1,10 @@
 <?php
 /**
 * Service to provide translation dictionnary.
-* @package   lizmap
-* @subpackage view
+* @package   osmflickr
+* @subpackage osmflickr
 * @author    3liz
-* @copyright 2011 3liz
+* @copyright 2013 3liz
 * @link      http://3liz.com
 * @license    Mozilla Public License : http://www.mozilla.org/MPL/
 */
@@ -12,10 +12,9 @@
 class translateCtrl extends jController {
 
   /**
-  * Get JSON containing all translation for a given jelix property file.
-  * @param string $property Name of the property file. Ex: map if searched file is map.UTF-8.properties
+  * Get text/javascript containing all translation for the dictionnary
   * @param string $lang Language. Ex: fr_FR (optionnal)
-  * @return binary object The image for this project.
+  * @return JavaScript.
   */
   function index() {
     $rep = $this->getResponse('binary');

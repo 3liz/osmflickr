@@ -12,9 +12,9 @@
       <p id="photo-info-loc">{@osmflickr~map.photo.info.taken@} {$loc->locality}, {$loc->county}, {$loc->region}, {$loc->country}</p>
       <script type="text/javascript">
       {literal}
-        lizMap.events.on({
+        ofMap.events.on({
           'uicreated':function(evt){
-            var imgLayer = lizMap.map.getLayersByName('img')[0];
+            var imgLayer = ofMap.map.getLayersByName('img')[0];
             var imgFeat = new OpenLayers.Feature.Vector(
               (new OpenLayers.Geometry.Point(
       {/literal}
@@ -22,7 +22,7 @@
       {literal}
               )).transform(
                 new OpenLayers.Projection('EPSG:4326'),
-                lizMap.map.getProjectionObject()
+                ofMap.map.getProjectionObject()
               ), {
       {/literal}
                 lon:{$loc->lon}
@@ -30,10 +30,10 @@
                ,acc:{$loc->acc}
       {literal}
               });
-            //lizMap.map.addLayer(imgLayer);
+            //ofMap.map.addLayer(imgLayer);
             imgLayer.addFeatures([imgFeat]);
             var imgGeom = imgFeat.geometry;
-            lizMap.map.setCenter(
+            ofMap.map.setCenter(
               new OpenLayers.LonLat(imgGeom.x, imgGeom.y),
               imgFeat.attributes.acc
             );

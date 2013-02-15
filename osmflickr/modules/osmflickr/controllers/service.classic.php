@@ -1,16 +1,21 @@
 <?php
 /**
+* The service controller
 * @package   osmflickr
 * @subpackage osmflickr
-* @author    DHONT René-Luc
-* @copyright 2011 DHONT René-Luc
+* @author    3Liz
+* @copyright 2013 3liz
 * @link      http://www.3liz.com
-* @license    All rights reserved
+* @license    Mozilla Public License : http://www.mozilla.org/MPL/
 */
 
 class serviceCtrl extends jController {
   /**
-   */
+  * Get OpenStreetmap Object.
+  * @param integer $osm_id The OpenStreetMap Object id
+  * @param text $osm_type The OpenStreetMap Object type
+  * @return XML.
+  */
   function OpenStreetMap() {
     $rep = $this->getResponse('binary');
     $rep->outputFileName = 'file.osm';
@@ -43,7 +48,10 @@ class serviceCtrl extends jController {
   }
 
   /**
-   */
+  * Query the OpenStreetMap XAPI
+  * @param text $bbox A bounding box in EPSG:4326
+  * @return XML.
+  */
   function xapi() {
     $rep = $this->getResponse('binary');
     $rep->outputFileName = 'file.osm';
@@ -71,7 +79,10 @@ class serviceCtrl extends jController {
   }
 
   /**
-   */
+  * Query the OpenStreetMap map API
+  * @param text $bbox A bounding box in EPSG:4326
+  * @return XML.
+  */
   function mapapi() {
     $rep = $this->getResponse('binary');
     $rep->outputFileName = 'file.osm';
@@ -97,7 +108,11 @@ class serviceCtrl extends jController {
   }
 
   /**
-   */
+  * Query the OpenStreetMap Nominatim API
+  * @param text $query A query on OpenStreetMap object
+  * @param text $bbox A bounding box in EPSG:4326
+  * @return XML.
+  */
   function nominatim() {
     $rep = $this->getResponse('binary');
     $rep->outputFileName = 'nominatim.json';
@@ -132,7 +147,11 @@ class serviceCtrl extends jController {
   }
 
   /**
-   */
+  * Query the Flickr API to retrieve geotagged photos with osm tag machine
+  * @param text $q A query on Flickr photos
+  * @param text $bbox A bounding box in EPSG:4326
+  * @return XML.
+  */
   function osmflickrmap() {
     $f = jClasses::getService('osmflickr~phpFlickr');
     
