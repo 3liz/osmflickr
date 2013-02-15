@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://jelix.org/ns/project/1.0">
     <info id="info@3liz.com" name="osmflickr" createdate="2013-01-31">
-        <version date="2013-01-31">0.1pre</version>
+        <version date="2013-01-31">1.0beta</version>
         <label lang="en_US">OsmFlickr</label>
         <description lang="en_US">Manage and create OpenStreetMap machine tags for Flickr </description>
         <license URL="http://www.mozilla.org/MPL/">Mozilla Public Licence</license>
