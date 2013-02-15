@@ -15,18 +15,41 @@ class defaultCtrl extends jController {
     function index() {
       // Until we create the map of geolocated Flickr Images
       // with OSM tag
+      /*
           $rep = $this->getResponse('redirect');
           $rep->action = 'osmflickr~auth:index';
           return $rep;
+*/
+        jLog::log('default','debug');
+        $rep = $this->getResponse('htmlmap');
+        $rep->title = 'OsmFlickr - Map';
 
-        $rep = $this->getResponse('html');
         $f = jClasses::getService('osmflickr~phpFlickr');
+        
+        $rep->body->assign('isConnected', $f->isConnected());
+        $rep->body->assign('user', $f->getUserSession());
+        
+        $rep->body->assign('photo', null);
+        
+        // Get the search form
+        $form = jForms::get("osmflickr~osmflickrmap");
+        if ( !$form )
+          $form = jForms::create("osmflickr~osmflickrmap");
+        
+        $tpl = new jTpl();
+        $tpl->assign('form', $form);
+        $info = $tpl->fetch('default_info');
+        $rep->body->assign('INFO', $info);
+        
+        $bp = jApp::config()->urlengine['basePath'];
+        $rep->addJSLink($bp.'js/map.default.js');
+        
+        $rep->addJSCode("var cfgUrl = '".jUrl::get('osmflickr~photo:getProjectConfig')."';");
+        $rep->addJSCode("var wmsServerURL = '".jUrl::get('osmflickr~photo:getCapabilities')."';");
+        $rep->addJSCode("var nominatimUrl = '".jUrl::get('osmflickr~service:nominatim')."';");
+        $rep->addJSCode("var osmflickrmapUrl = '".jUrl::get('osmflickr~service:osmflickrmap')."';");
 
-        $isConnected = $f->isConnected();
-        $user = $f->getUserSession();
-
-        $rep->body->assign('isConnected', $isConnected);
-        $rep->body->assign('user', $user);
+        return $rep;
 
         // this is a call for the 'welcome' zone after creating a new application
         // remove this line !

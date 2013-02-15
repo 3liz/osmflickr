@@ -4,7 +4,11 @@
 
 <div id="header">
   <div id="logo">
+    {if $photo}
     <h1>OsmFlickr - {$photo->title}</h1>
+    {else}
+    <h1>OsmFlickr - Map</h1>
+    {/if}
   </div>
 </div>
 
@@ -29,6 +33,7 @@
       </div>
     </form>
     <ul class="nav">
+      {if $photo}
       <li class="osm load">
         <a id="loadOsmData" href="#" rel="tooltip" data-original-title="{@osmflickr~map.osm.data.load@}" data-placement="bottom">
           <span class="icon"></span>
@@ -39,6 +44,7 @@
           <span class="icon"></span>
         </a>
       </li>
+      {/if}
       {if $isConnected}
       <li class="user dropdown">
         <a class="dropdown-toggle" data-toggle="dropdown" href="#">

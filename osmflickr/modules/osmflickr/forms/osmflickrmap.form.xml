@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form xmlns="http://jelix.org/ns/forms/1.1">
+  <input ref="q">
+    <label>Text</label>
+  </input>
+
+  <submit ref="submit">
+    <label>Search</label>
+  </submit>
+</form>

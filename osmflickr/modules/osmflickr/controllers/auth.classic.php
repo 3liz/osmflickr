@@ -48,6 +48,7 @@ class authCtrl extends jController {
             //"has_geo"=>1, // for geotagged photos
             //"has_geo"=>0, // for not geotagged photos
             //"machine_tags"=>"osm:",
+            "extras"=>"geo,machine_tags"
           );
 
           if ( $form->getData('hasosm') == '1' )
@@ -60,7 +61,6 @@ class authCtrl extends jController {
             else
               $search_params['text'] = $form->getData('q');
           }
-          jLog::log(json_encode($search_params),'debug');
           if ( $form->getData('hasgeo') != '-1' )
             $search_params['has_geo'] = $form->getData('hasgeo');
           if ( $form->getData('page') != '1' )
@@ -68,13 +68,17 @@ class authCtrl extends jController {
 
           $photos_search = $f->photos_search($search_params);
 
-          jLog::log(json_encode($photos_search),'debug');
           jClasses::inc('osmflickr~flickrPhoto');
           $photos = array();
-          foreach ($photos_search['photo'] as $p) {
-            $photo = new flickrPhoto( $p['id'] );
-            $photo->updateFromSearch( $p );
-            $photos[] = $photo;
+          if ($photos_search) {
+            foreach ($photos_search['photo'] as $p) {
+              $photo = new flickrPhoto( $p['id'] );
+              $photo->updateFromSearch( $p );
+              $photos[] = $photo;
+            }
+          } else {
+            jLog::log('Code: '.$f->error_code,'debug');
+            jLog::log('Msg: '.json_encode($f->error_msg),'debug');
           }
           $tpl = new jTpl();
           $tpl->assign('form', $form);
@@ -126,7 +130,7 @@ class authCtrl extends jController {
           $rep->url = $url;
           return $rep;
         } else {
-          jMessage($f->getErrorCode().': '.implode(',', $f->getErrorMsg()), 'error');
+          jMessage::add($f->getErrorCode().': '.implode(',', $f->getErrorMsg()), 'error');
           $rep = $this->getResponse('redirect');
           $rep->action = 'osmflickr~default:index';
           return $rep;
@@ -144,7 +148,7 @@ class authCtrl extends jController {
       $rep = $this->getResponse('redirect');
       $f = jClasses::getService('osmflickr~phpFlickr');
       if ( ! $f->getAccessToken() ) {
-        jMessage($f->getErrorCode().': '.implode(',', $f->getErrorMsg()), 'error');
+        jMessage::add($f->getErrorCode().': '.implode(',', $f->getErrorMsg()), 'error');
         $rep->action = 'osmflickr~default:index';
       }
       $rep->action = 'osmflickr~auth:index';

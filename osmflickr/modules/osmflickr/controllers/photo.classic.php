@@ -55,6 +55,9 @@ class photoCtrl extends jController {
         // Get photo info
         $info .= $tpl->fetch('photo_info');
         $rep->body->assign('INFO', $info);
+        
+        $bp = jApp::config()->urlengine['basePath'];
+        $rep->addJSLink($bp.'js/map.photo.js');
 
         // Add the json config as a javascript variable
         $rep->addJSCode("var addTagUrl = '".jUrl::get('osmflickr~photo:addTag',array('photo_id'=>$photo_id))."';");

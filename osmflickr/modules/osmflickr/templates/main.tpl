@@ -10,6 +10,11 @@
 <div id="headermenu" class="navbar navbar-fixed-top">
   <div id="auth" class="navbar-inner">
     <ul class="nav pull-right">
+      <li class="map">
+        <a rel="tooltip" title="{@osmflickr~default.header.map.title@}" href="{jurl 'osmflickr~default:index'}">
+          <span class="icon"></span>
+        </a>
+      </li>
       {if $isConnected}
       <li class="user dropdown">
         <a class="dropdown-toggle" data-toggle="dropdown" href="#">

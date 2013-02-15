@@ -130,4 +130,39 @@ class serviceCtrl extends jController {
 
     return $rep;
   }
+
+  /**
+   */
+  function osmflickrmap() {
+    $f = jClasses::getService('osmflickr~phpFlickr');
+    
+    // Get the search form
+    $form = jForms::get("osmflickr~osmflickrmap");
+    if ( !$form )
+      $form = jForms::create("osmflickr~osmflickrmap");
+    $form->setData('q', $this->param('q') );
+
+    // Get the osmflickr images
+    $search_params = array(
+      "per_page"=>30,
+      "content_type"=>1,  // for photos only
+      "has_geo"=>1, // for geotagged photos
+      "machine_tags"=>"osm:",
+      "extras"=>"geo,url_s,url_sq,machine_tags"
+    );
+    $bbox = $this->param('bbox');
+    if( preg_match('/\d+(\.\d+)?,\d+(\.\d+)?,\d+(\.\d+)?,\d+(\.\d+)?/',$bbox) )
+      $search_params['bbox'] = $bbox;
+    if ( $form->getData('q') != '' )
+      $search_params['text'] = $form->getData('q');
+    
+    $photos_search = $f->photos_search($search_params);
+
+    $rep = $this->getResponse('binary');
+    $rep->outputFileName = 'flickr.json';
+    $rep->mimeType = 'application/json';
+    $rep->content = '{"photos":'.json_encode($photos_search).',"stat":"ok"}';
+
+    return $rep;
+  }
 }
