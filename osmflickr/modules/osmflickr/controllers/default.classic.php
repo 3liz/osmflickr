@@ -37,11 +37,47 @@ class defaultCtrl extends jController {
         $bp = jApp::config()->urlengine['basePath'];
         $rep->addJSLink($bp.'js/map.default.js');
         
-        $rep->addJSCode("var cfgUrl = '".jUrl::get('osmflickr~photo:getProjectConfig')."';");
+        $rep->addJSCode("var cfgUrl = '".jUrl::get('osmflickr~default:getProjectConfig')."';");
         $rep->addJSCode("var wmsServerURL = '".jUrl::get('osmflickr~photo:getCapabilities')."';");
         $rep->addJSCode("var nominatimUrl = '".jUrl::get('osmflickr~service:nominatim')."';");
         $rep->addJSCode("var osmflickrmapUrl = '".jUrl::get('osmflickr~service:osmflickrmap')."';");
 
         return $rep;
     }
+
+  /**
+  * Get the project configuration : map options and layers.
+  * @param integer $tree_id Id of the tree
+  * @return Json string containing the project options.
+  */
+  function getProjectConfig() {
+    $rep = $this->getResponse('binary');
+
+    # default values
+    $bbox = '-85.0,-85.0,85.0,85.0';
+    # use the cookie
+    if ( isset($_COOKIE['bbox']) && preg_match('/\d+(\.\d+)?,\d+(\.\d+)?,\d+(\.\d+)?,\d+(\.\d+)?/',$_COOKIE['bbox']) )
+      $bbox = $_COOKIE['bbox'];
+
+    $rep->content = '{
+  "options" : {
+    "googleStreets":"False",
+    "googleHybrid":"False",
+    "googleSatellite":"False",
+    "googleTerrain":"False",
+    "osmMapnik":"True",
+    "osmMapquest":"True",
+    "projection" : {"proj4":"+proj=longlat +ellps=WGS84 +towgs84=0,0,0,0,0,0,0 +no_defs", "ref":"EPSG:4326"},
+    "bbox":['.$bbox.'],
+    "imageFormat" : "image/png",
+    "minScale" : 10000,
+    "maxScale" : 10000000,
+    "zoomLevelNumber" : 10,
+    "mapScales" : [100000,50000,25000,10000]
+  },
+  "layers" : {}
+}';
+    $rep->addHttpHeader ("mime/type", "text/json");
+    return $rep;
+  }
 }
