@@ -112,7 +112,7 @@ ofMap.events.on({
         if ( $('#liz_layer_popup_'+feat.fid).length !=0 )
           return true;
           var text = '<h4>'+feat.attributes.title+'</h4>';
-          text += '<div class="ofMapPopupDiv">';
+          text += '<div class="lizmapPopupDiv">';
           text += '<a href="http://www.flickr.com/photos/'+feat.attributes.owner+'/'+feat.attributes.id+'" class="thumbnail" title="'+feat.attributes.title+'" target="_blank">';
           text += '<img src="'+feat.attributes.url_s+'" alt="">';
           text += '</a>';
@@ -135,8 +135,8 @@ ofMap.events.on({
             map.removePopup(map.popups[0]);
 
           OpenLayers.Popup.ofMapAnchored = OpenLayers.Class(OpenLayers.Popup.Anchored, {
-            'displayClass': 'olPopup ofMapPopup'
-            ,'contentDisplayClass': 'olPopupContent ofMapPopupContent'
+            'displayClass': 'olPopup lizmapPopup'
+            ,'contentDisplayClass': 'olPopupContent lizmapPopupContent'
           });
           var popup = new OpenLayers.Popup.ofMapAnchored(
               "liz_layer_popup_"+feat.fid,
