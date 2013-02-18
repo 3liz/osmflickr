@@ -207,7 +207,7 @@ ofMap.events.on({
         var b = evt.feature.geometry.getBounds().transform(map.getProjectionObject(), new OpenLayers.Projection('EPSG:4326'));
         // limit the size of the bbox
         if (b.getWidth()*b.getHeight() > 0.00001) {
-          $('#message').html('<div class="alert alert-block alert-error fade in" data-alert="alert"><a class="close" data-dismiss="alert" href="#">×</a><p>'+dict['osm.load.extent.toobig']+'</p><p>'+dict['osm.load.extent.smaller']+'</p></div>');
+          $('#message').html('<div class="alert alert-block alert-error fade in" data-alert="alert"><a class="close" data-dismiss="alert" href="#">×</a><p>'+ofDict['osm.load.extent.toobig']+'</p><p>'+ofDict['osm.load.extent.smaller']+'</p></div>');
           return false;
         }
 
@@ -253,6 +253,8 @@ ofMap.events.on({
               return -1;
             return 0;
           });
+          if ( feats.length == 0 )
+            $('#message').html('<div class="alert alert-block alert-error fade in" data-alert="alert"><a class="close" data-dismiss="alert" href="#">×</a><p>'+ofDict['osm.load.nodata']+'</p></div>');
           osmLayer.addFeatures(feats);
           $('#loading').dialog('close');
           $('#loadOsmData').click();
@@ -268,7 +270,7 @@ ofMap.events.on({
           var fid = feat.fid.split('.');
           var text = '<h4>OSM element '+fid[0]+'</h4>';
           text += '<div class="lizmapPopupDiv">';
-          text += '<button class="btn osmtag-add" title="Add"><span class="icon"></span><span class="text">'+dict['osm.tagmachine.add']+'</span></button>';
+          text += '<button class="btn osmtag-add" title="Add"><span class="icon"></span><span class="text">'+ofDict['osm.tagmachine.add']+'</span></button>';
           text += '<table class="lizmapPopupTable">';
           text += '<thead><tr><th class="left">key</th><th>value</th></tr></thead>';
           text += '<tbody>';

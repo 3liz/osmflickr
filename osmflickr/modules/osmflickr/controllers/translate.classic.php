@@ -38,7 +38,7 @@ class translateCtrl extends jController {
         }
       }
     }
-    $rep->content = 'var dict = '.json_encode($data).';';
+    $rep->content = 'var ofDict = '.json_encode($data).';';
     return $rep;
   }
 
