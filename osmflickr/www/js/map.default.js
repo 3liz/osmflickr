@@ -17,11 +17,8 @@ ofMap.events.on({
               '): ',
             obj.message].join(''));
         }
-        console.log(obj);
         if(!obj || !obj.photos ||
           !OpenLayers.Util.isArray(obj.photos.photo)) {
-            console.log(!obj);
-            console.log(!obj.photos);
             throw new Error(
               'Unexpected Flickr response');
           }
@@ -179,13 +176,39 @@ ofMap.events.on({
     $('#photo-search-button').click(function(){
       $('#photo-search').submit();
     });
+    $('#map-content').append('<div id="permalink"><a href="'+window.location+'">Lien permanent</a></div>');
+
+    map.events.on({
+      moveend : function() {
+        var bbox = map.getExtent().transform(map.getProjectionObject(), new OpenLayers.Projection('EPSG:4326')).toBBOX();
+        $.cookie('bbox', bbox);
+        $('#photo-info').html('')
+        var layer = map.getLayersByName('Flickr')[0];
+        layer.refresh({force:true});
+      }
+    });
+
+    layer.events.on({
+      moveend : function() {
+        var bbox = map.getExtent().transform(map.getProjectionObject(), new OpenLayers.Projection('EPSG:4326')).toBBOX();
+        var href = $('#permalink a').attr('href');
+        if (href.indexOf('?') != -1) {
+          href = href.substring( 0, href.indexOf('?') );
+        }
+        var params = {};
+        params['bbox'] = bbox;
+        params['query'] = layer.protocol.params.q;
+        href += '?'+OpenLayers.Util.getParameterString(params);
+        $('#permalink a').attr('href', href);
+      }
+    });
   }
   ,'uicreated':function(evt){
     var map = evt.map;
     // Search with nominatim
     $('#nominatim-search').submit(function(){
       $('#nominatim-search .dropdown-inner .items').html('');
-      $(this).data('value',$('#search-query').val());
+      $('#permalink a').data('value',$('#search-query').val());
       $.get(nominatimUrl
         ,{"query":$('#search-query').val()}
         ,function(data) {
@@ -233,15 +256,6 @@ ofMap.events.on({
       var nomin = $('#nominatim-search');
       if ( !nomin.is(':hover') ) {
         nomin.removeClass('open');
-      }
-    });
-
-    map.events.on({
-      moveend : function() {
-        $.cookie('bbox',map.getExtent().transform(map.getProjectionObject(), new OpenLayers.Projection('EPSG:4326')).toBBOX());
-        $('#photo-info').html('')
-        var layer = map.getLayersByName('Flickr')[0];
-        layer.refresh({force:true});
       }
     });
   }

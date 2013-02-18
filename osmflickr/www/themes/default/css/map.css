@@ -594,12 +594,31 @@ body {
   border-top-left-radius: 1em;
 }
 #attribution {
+  font-size: 0.75em;
   line-height: 10px;
-  vertical-align : bottom;
+  vertical-align : text-bottom;
   margin-right : 0.5em;
 }
 .olLayerGooglePoweredBy.olLayerGoogleV3.gmnoprint {
   display:none;
+}
+
+#permalink {
+  top : 0;
+  right : 0;
+  padding : 0 0.5em;
+  position : absolute;
+  z-index : 1000;
+  background-color : rgba(255,255,255,0.7);
+  -webkit-border-bottom-left-radius: 0.5em;
+  -moz-border-bottom-left-radius: 0.5em;
+  border-bottom-left-radius: 0.5em;
+  line-height:0.75em;
+}
+
+#permalink a {
+  font-size: 0.75em;
+  line-height: 10px;
 }
 
 /**

@@ -28,6 +28,10 @@ class defaultCtrl extends jController {
         $form = jForms::get("osmflickr~osmflickrmap");
         if ( !$form )
           $form = jForms::create("osmflickr~osmflickrmap");
+        if ( $this->param('bbox') )
+          $form->setData('q', '' );
+        if ( $this->param('query') )
+          $form->setData('q', $this->param('query') );
         
         $tpl = new jTpl();
         $tpl->assign('form', $form);
@@ -37,7 +41,10 @@ class defaultCtrl extends jController {
         $bp = jApp::config()->urlengine['basePath'];
         $rep->addJSLink($bp.'js/map.default.js');
         
-        $rep->addJSCode("var cfgUrl = '".jUrl::get('osmflickr~default:getProjectConfig')."';");
+        if ( $this->param('bbox') && preg_match('/\d+(\.\d+)?,\d+(\.\d+)?,\d+(\.\d+)?,\d+(\.\d+)?/',$this->param('bbox')) )
+          $rep->addJSCode("var cfgUrl = '".jUrl::get('osmflickr~default:getProjectConfig', array('bbox'=>$this->param('bbox')))."';");
+        else
+          $rep->addJSCode("var cfgUrl = '".jUrl::get('osmflickr~default:getProjectConfig')."';");
         $rep->addJSCode("var wmsServerURL = '".jUrl::get('osmflickr~photo:getCapabilities')."';");
         $rep->addJSCode("var nominatimUrl = '".jUrl::get('osmflickr~service:nominatim')."';");
         $rep->addJSCode("var osmflickrmapUrl = '".jUrl::get('osmflickr~service:osmflickrmap')."';");
@@ -58,6 +65,8 @@ class defaultCtrl extends jController {
     # use the cookie
     if ( isset($_COOKIE['bbox']) && preg_match('/\d+(\.\d+)?,\d+(\.\d+)?,\d+(\.\d+)?,\d+(\.\d+)?/',$_COOKIE['bbox']) )
       $bbox = $_COOKIE['bbox'];
+    if ( $this->param('bbox') && preg_match('/\d+(\.\d+)?,\d+(\.\d+)?,\d+(\.\d+)?,\d+(\.\d+)?/',$this->param('bbox')) )
+      $bbox = $this->param('bbox');
 
     $rep->content = '{
   "options" : {
