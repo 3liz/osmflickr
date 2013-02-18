@@ -121,10 +121,13 @@ ofMap.events.on({
             text += '<p>';
             var mtagsText = [];
             for (var i=0, len=mtags.length; i<len; i++) {
-              var mt = mtags[i]
-              var mtSplit = mt.split('=');
-              var mtText = '<a href="http://www.openstreetmap.org/browse/'+mtSplit[0].replace('osm:','')+'/'+mtSplit[1]+'" target="_blank">'+mt+'</a>';
-              mtagsText.push(mtText);
+              var mt = mtags[i];
+              if ( mt.match(/^osm:/) ) {
+                var mtSplit = mt.split('=');
+                var mtText = '<a href="http://www.openstreetmap.org/browse/'+mtSplit[0].replace('osm:','')+'/'+mtSplit[1]+'" target="_blank">'+mt+'</a>';
+                mtagsText.push(mtText);
+              } else
+                mtagsText.push(mt);
             }
             text += mtagsText.join(' ');
             text += '</p>';

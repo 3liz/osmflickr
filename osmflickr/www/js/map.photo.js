@@ -149,13 +149,18 @@ ofMap.events.on({
         for (var k in attr) {
           var v = attr[k];
           if ( imageRegex.test(v) )
-      text += '<tr><td colspan="2"><img src="'+v+'" width="300" border="0"/></td></tr>';
+            text += '<tr><td colspan="2"><img src="'+v+'" width="300" border="0"/></td></tr>';
           else {
-            text += '<tr><th>'+k+'</th>';
+            if ( 'osm.key.'+k in ofDict )
+              text += '<tr><th>'+ofDict['osm.key.'+k]+'</th>';
+            else
+              text += '<tr><th>'+k+'</th>';
             if ( urlRegex.test(v) )
-      text += '<td><a href="'+v+'" target="_blank">'+v+'<a></td></tr>';
+              text += '<td><a href="'+v+'" target="_blank">'+v+'<a></td></tr>';
             else if ( emailRegex.test(v) )
               text += '<td><a href="mailto:'+v+'">'+v+'</a></td></tr>';
+            else if ( 'osm.value.'+v in ofDict )
+              text += '<td>'+ofDict['osm.value.'+v]+'</td></tr>';
             else
               text += '<td>'+v+'</td></tr>';
           }
@@ -283,11 +288,16 @@ ofMap.events.on({
             if ( imageRegex.test(v) )
               text += '<tr><td colspan="2"><img src="'+v+'" width="300" border="0"/></td></tr>';
             else {
-              text += '<tr><th>'+k+'</th>';
+              if ( 'osm.key.'+k in ofDict )
+                text += '<tr><th>'+ofDict['osm.key.'+k]+'</th>';
+              else
+                text += '<tr><th>'+k+'</th>';
               if ( urlRegex.test(v) )
                 text += '<td><a href="'+v+'" target="_blank">'+v+'<a></td></tr>';
               else if ( emailRegex.test(v) )
                 text += '<td><a href="mailto:'+v+'">'+v+'</a></td></tr>';
+              else if ( 'osm.value.'+v in ofDict )
+                text += '<td>'+ofDict['osm.value.'+v]+'</td></tr>';
               else
                 text += '<td>'+v+'</td></tr>';
             }

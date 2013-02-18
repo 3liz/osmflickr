@@ -6,7 +6,7 @@ startModule=osmflickr
 startAction="default:index"
 
 locale=en_US
-availableLocales=en_US
+availableLocales=en_US,fr_FR
 charset=UTF-8
 
 ; see http://www.php.net/manual/en/timezones.php for supported values
@@ -43,6 +43,7 @@ jWSDL.access=0
 osmflickr.access=2
 [coordplugins]
 ;name = file_ini_name or 1
+autolocale = autolocale.coord.ini.php
 
 [tplplugins]
 defaultJformsBuilder=html
