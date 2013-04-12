@@ -63,9 +63,9 @@ class defaultCtrl extends jController {
     # default values
     $bbox = '-85.0,-85.0,85.0,85.0';
     # use the cookie
-    if ( isset($_COOKIE['bbox']) && preg_match('/\d+(\.\d+)?,\d+(\.\d+)?,\d+(\.\d+)?,\d+(\.\d+)?/',$_COOKIE['bbox']) )
+    if ( isset($_COOKIE['bbox']) && preg_match('/(-)?\d+(\.\d+)?,(-)?\d+(\.\d+)?,(-)?\d+(\.\d+)?,(-)?\d+(\.\d+)?/',$_COOKIE['bbox']) )
       $bbox = $_COOKIE['bbox'];
-    if ( $this->param('bbox') && preg_match('/\d+(\.\d+)?,\d+(\.\d+)?,\d+(\.\d+)?,\d+(\.\d+)?/',$this->param('bbox')) )
+    if ( $this->param('bbox') && preg_match('/(-)?\d+(\.\d+)?,(-)?\d+(\.\d+)?,(-)?\d+(\.\d+)?,(-)?\d+(\.\d+)?/',$this->param('bbox')) )
       $bbox = $this->param('bbox');
 
     $rep->content = '{
