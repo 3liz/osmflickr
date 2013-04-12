@@ -168,3 +168,27 @@ a:hover {
 #content {
   padding-top: 20px;
 }
+
+div.ofphoto {
+  position: relative;
+}
+div.ofphoto span.oflocation{
+  display:block;
+  width:20px;
+  height:20px;
+  position: absolute;
+  bottom: 5px;
+  left: 10px;
+  background-image:url("images/sprite_20_tools.png");
+  background-position: 0px -180px;
+}
+div.ofphoto span.ofosmtags{
+  display:block;
+  width:25px;
+  height:25px;
+  position: absolute;
+  bottom: 5px;
+  right: 10px;
+  background-image:url("images/sprite_flickr.png");
+  background-position: 0px 0px;
+}

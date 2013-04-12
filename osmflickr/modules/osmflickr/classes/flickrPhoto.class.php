@@ -53,6 +53,39 @@ class flickrPhoto {
       $this->ispublic = $p['ispublic'];
       $this->isfriend = $p['isfriend'];
       $this->isfamily = $p['isfamily'];
+
+      if ( isset($p['machine_tags']) )
+        if ( !$this->info ) {
+          $this->info = array(
+            'tags' => array(
+              'tag' => array()
+            )
+          );
+          foreach ( explode(' ',$p['machine_tags']) as $raw) {
+            $this->info['tags']['tag'][] = array(
+              'machine_tag' => 1,
+              'raw' => $raw
+            );
+          }
+        }
+
+      if ( isset($p['longitude'])
+        && isset($p['latitude'])
+        && isset($p['accuracy'])
+        && $p['accuracy'] != 0 ) {
+        if ( !$this->info )
+          $this->info = array();
+        if ( !isset($this->info['location']) )
+          $this->info['location'] = array(
+            "latitude"=>$p['latitude'],
+            "longitude"=>$p['longitude'],
+            "accuracy"=>$p['accuracy'],
+            "country"=>array('_content'=>''),
+            "region"=>array('_content'=>''),
+            "county"=>array('_content'=>''),
+            "locality"=>array('_content'=>''),
+          );
+      }
       return true;
     }
 
@@ -144,7 +177,7 @@ class flickrPhoto {
         return $tags;
 
       foreach ( $this->info['tags']['tag'] as $t ) {
-        if ( $t['machine_tag'] == 1 && preg_match('#^osm:#', $t['raw'] ) ) {
+        if ( $t['machine_tag'] == 1 && preg_match('/^osm:/', $t['raw'] ) ) {
           $matches = array();
           $raw = preg_match('/osm:(?P<osm_type>\w+)=(?P<osm_id>\d+)/', $t['raw'], $matches);;
           $tags[] = (object) array(

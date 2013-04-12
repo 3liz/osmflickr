@@ -29,9 +29,17 @@
 <ul class="thumbnails">
   {foreach $photos as $p}
   <li class="span2">
+    <div class="ofphoto">
     <a href="{jurl 'osmflickr~photo:index',array('photo_id'=>$p->id,'secret'=>$p->secret)}" class="thumbnail" title="{$p->title}">
       <img src="{$p->buildURL('lsquare')}" alt="">
     </a>
+    {if $p->hasLocation()}
+    <span class="oflocation"></span>
+    {/if}
+    {if $p->hasOsmTags()}
+    <span class="ofosmtags"></span>
+    </div>
+    {/if}
   </li>
   {/foreach}
 </ul>
