@@ -130,7 +130,7 @@ class serviceCtrl extends jController {
       'format'=>'json',
     );
     $bbox = $this->param('bbox');
-    if( !preg_match('/(-)?\d+(\.\d+)?,(-)?\d+(\.\d+)?,(-)?\d+(\.\d+)?,(-)?\d+(\.\d+)?/',$bbox) )
+    if( preg_match('/(-)?\d+(\.\d+)?,(-)?\d+(\.\d+)?,(-)?\d+(\.\d+)?,(-)?\d+(\.\d+)?/',$bbox) )
       $params['viewbox'] = $bbox;
 
     $url .= http_build_query($params);
@@ -170,7 +170,7 @@ class serviceCtrl extends jController {
       "extras"=>"geo,url_s,url_sq,machine_tags"
     );
     $bbox = $this->param('bbox');
-    if( !preg_match('/(-)?\d+(\.\d+)?,(-)?\d+(\.\d+)?,(-)?\d+(\.\d+)?,(-)?\d+(\.\d+)?/',$bbox) )
+    if( preg_match('/(-)?\d+(\.\d+)?,(-)?\d+(\.\d+)?,(-)?\d+(\.\d+)?,(-)?\d+(\.\d+)?/',$bbox) )
       $search_params['bbox'] = $bbox;
     if ( $form->getData('q') != '' )
       $search_params['text'] = $form->getData('q');
