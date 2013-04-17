@@ -376,15 +376,20 @@ ofMap.events.on({
       if (drawBox.active) {
         drawBox.deactivate();
         selectOsm.activate();
+        $('#message a.close').click();
+        ofMap.addMessage(ofDict['osm.select.object'],'info',true);
       } else {
         selectOsm.deactivate();
         drawBox.activate();
+        $('#message a.close').click();
+        ofMap.addMessage(ofDict['osm.load.extent.draw'],'info',true);
       }
       return false;
     });
     // Remove loaded OSM data
     $('#removeOsmData').click(function(){
       osmvector.destroyFeatures();
+      $('#message a.close').click();
       return false;
     });
     // Search with nominatim

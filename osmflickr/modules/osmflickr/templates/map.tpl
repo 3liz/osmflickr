@@ -112,7 +112,7 @@
       <span id="attribution"></span>
       {image $j_basepath.'css/img/logo_footer.png'}
     </div>
-    <div id="message">{jmessage_bootstrap}</div>
+    <div id="message" class="span6">{jmessage_bootstrap}</div>
   </div>
 </div>
 

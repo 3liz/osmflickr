@@ -921,7 +921,35 @@ var ofMap = function() {
     return false;
   }
 
+  /**
+   * PRIVATE function: mAddMessage
+   * Write message to the UI
+   *
+   *
+   * Returns:
+   * {jQuery Object} The message added.
+   */
+  function mAddMessage( aMessage, aType, aClose ) {
+    var mType = 'info';
+    var mTypeList = ['info', 'error', 'success'];
+    var mClose = false;
 
+    if ( $.inArray(aType, mTypeList) != -1 )
+      mType = aType;
+
+    if ( aClose )
+      mClose = true;
+      
+    var html = '<div class="alert alert-block alert-'+mType+' fade in" data-alert="alert">';
+    if ( mClose )
+      html += '<a class="close" data-dismiss="alert" href="#">×</a>';
+    html += '<p>'+aMessage+'</p>';
+    html += '</div>';
+
+    var elt = $(html);
+    $('#message').append(elt);
+    return elt;
+  }
 
   // creating the ofMap object
   var obj = {
@@ -967,6 +995,13 @@ var ofMap = function() {
      */
     checkMobile: function() {
       return mCheckMobile();
+    },
+
+    /**
+     * Method: checkMobile
+     */
+    addMessage: function( aMessage, aType, aClose ) {
+      return mAddMessage( aMessage, aType, aClose );
     },
 
     /**
