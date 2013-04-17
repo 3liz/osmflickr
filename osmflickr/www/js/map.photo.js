@@ -77,17 +77,27 @@ ofMap.events.on({
         osmtagLayer.addFeatures([osmFeat]);
       }, 'text');
     });
-
+    
+    // initiatlize layer
+    // style the sketch fancy
+    var sketchSymbolizers = {
+      "Point": {
+        pointRadius: 6
+      },
+      "Line": {
+        strokeWidth: 4
+      },
+      "Polygon": {
+        strokeWidth: 2
+      }
+    };
+    var style = new OpenLayers.Style();
+    style.addRules([
+        new OpenLayers.Rule({symbolizer: sketchSymbolizers})
+        ]);
+    var styleMap = new OpenLayers.StyleMap({"default": style});
     var osmLayer = new OpenLayers.Layer.Vector('osmvector', {
-      /*
-      styleMap: new OpenLayers.StyleMap({
-        pointRadius: 6,
-        fillColor: "#0063DC",
-        fillOpacity: 0.4,
-        strokeColor: "#FF0084",
-        strokeWidth: 1
-      })
-      */
+      styleMap: styleMap
     });
     map.addLayer(osmLayer);
     $('#osmtagbar ul.inline li a.delete-x').click(function() {
