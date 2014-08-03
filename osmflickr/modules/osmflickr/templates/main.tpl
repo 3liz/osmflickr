@@ -23,7 +23,7 @@
           <span class="caret"></span>
         </a>
         <ul class="dropdown-menu pull-right">
-          <li><a href="http://www.flickr.com/photos/{$user->nsid}/">{@osmflickr~default.header.flickr.account@}</a></li>
+          <li><a href="https://www.flickr.com/photos/{$user->nsid}/">{@osmflickr~default.header.flickr.account@}</a></li>
           <li><a href="{jurl 'osmflickr~auth:out'}">{@osmflickr~default.header.disconnect@}</a></li>
         </ul>
       </li>

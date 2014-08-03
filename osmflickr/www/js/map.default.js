@@ -110,7 +110,7 @@ ofMap.events.on({
           return true;
           var text = '<h4>'+feat.attributes.title+'</h4>';
           text += '<div class="lizmapPopupDiv">';
-          text += '<a href="http://www.flickr.com/photos/'+feat.attributes.owner+'/'+feat.attributes.id+'" class="thumbnail" title="'+feat.attributes.title+'" target="_blank">';
+          text += '<a href="https://www.flickr.com/photos/'+feat.attributes.owner+'/'+feat.attributes.id+'" class="thumbnail" title="'+feat.attributes.title+'" target="_blank">';
           text += '<img src="'+feat.attributes.url_s+'" alt="">';
           text += '</a>';
           var mtags = feat.attributes.machine_tags.split(' ');

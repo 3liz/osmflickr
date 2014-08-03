@@ -24,12 +24,12 @@ class phpFlickr {
   var $api_key;
   var $secret;
 
-  var $rest_endpoint = 'http://api.flickr.com/services/rest/';
-  var $upload_endpoint = 'http://api.flickr.com/services/upload/';
-  var $replace_endpoint = 'http://api.flickr.com/services/replace/';
-  var $oauthrequest_endpoint = 'http://www.flickr.com/services/oauth/request_token/';
-  var $oauthauthorize_endpoint = 'http://www.flickr.com/services/oauth/authorize/';
-  var $oauthaccesstoken_endpoint = 'http://www.flickr.com/services/oauth/access_token/';
+  var $rest_endpoint = 'https://api.flickr.com/services/rest/';
+  var $upload_endpoint = 'https://api.flickr.com/services/upload/';
+  var $replace_endpoint = 'https://api.flickr.com/services/replace/';
+  var $oauthrequest_endpoint = 'https://www.flickr.com/services/oauth/request_token/';
+  var $oauthauthorize_endpoint = 'https://www.flickr.com/services/oauth/authorize/';
+  var $oauthaccesstoken_endpoint = 'https://www.flickr.com/services/oauth/access_token/';
   var $req;
   var $response;
   var $parsed_response;
@@ -50,7 +50,7 @@ class phpFlickr {
     $api_key_secret = $ini->getValue('api_key_secret');
     $die_on_error = false;
     //The API Key must be set before any calls can be made.  You can
-    //get your own at http://www.flickr.com/services/api/misc.api_keys.html
+    //get your own at https://www.flickr.com/services/api/misc.api_keys.html
     $this->api_key = $api_key;
     $this->secret = $api_key_secret;
     $this->die_on_error = $die_on_error;
@@ -408,9 +408,9 @@ class phpFlickr {
     }
 
     if ($size == "original") {
-      $url = "http://farm" . $photo['farm'] . ".static.flickr.com/" . $photo['server'] . "/" . $photo['id'] . "_" . $photo['originalsecret'] . "_o" . "." . $photo['originalformat'];
+      $url = "https://farm" . $photo['farm'] . ".static.flickr.com/" . $photo['server'] . "/" . $photo['id'] . "_" . $photo['originalsecret'] . "_o" . "." . $photo['originalformat'];
     } else {
-      $url = "http://farm" . $photo['farm'] . ".static.flickr.com/" . $photo['server'] . "/" . $photo['id'] . "_" . $photo['secret'] . $sizes[$size] . ".jpg";
+      $url = "https://farm" . $photo['farm'] . ".static.flickr.com/" . $photo['server'] . "/" . $photo['id'] . "_" . $photo['secret'] . $sizes[$size] . ".jpg";
     }
     return $url;
   }
@@ -628,13 +628,13 @@ class phpFlickr {
 
   /* Photos Methods */
   function photos_addTags ($photo_id, $tags) {
-    /* http://www.flickr.com/services/api/flickr.photos.addTags.html */
+    /* https://www.flickr.com/services/api/flickr.photos.addTags.html */
     $this->request("flickr.photos.addTags", array("photo_id"=>$photo_id, "tags"=>$tags), TRUE);
     return $this->parsed_response ? true : false;
   }
 
   function photos_removeTag ($tag_id) {
-    /* http://www.flickr.com/services/api/flickr.photos.removeTag.html */
+    /* https://www.flickr.com/services/api/flickr.photos.removeTag.html */
     $this->request("flickr.photos.removeTag", array("tag_id"=>$tag_id), TRUE);
     return $this->parsed_response ? true : false;
   }
@@ -651,13 +651,13 @@ class phpFlickr {
      * list of arguments.
      */
 
-    /* http://www.flickr.com/services/api/flickr.photos.search.html */
+    /* https://www.flickr.com/services/api/flickr.photos.search.html */
     $this->request("flickr.photos.search", $args);
     return $this->parsed_response ? $this->parsed_response['photos'] : false;
   }
 
   function photos_getInfo ($photo_id, $secret = NULL, $humandates = NULL, $privacy_filter = NULL, $get_contexts = NULL) {
-    /* http://www.flickr.com/services/api/flickr.photos.getInfo.html */
+    /* https://www.flickr.com/services/api/flickr.photos.getInfo.html */
     return $this->call('flickr.photos.getInfo', array('photo_id' => $photo_id, 'secret' => $secret, 'humandates' => $humandates, 'privacy_filter' => $privacy_filter, 'get_contexts' => $get_contexts));
   }
 }

@@ -110,9 +110,9 @@ class flickrPhoto {
       }
 
       if ($size == "original") {
-        $url = "http://farm" . $this->farm . ".static.flickr.com/" . $this->server . "/" . $this->id . "_" . $this->originalsecret . "_o" . "." . $this->originalformat;
+        $url = "https://farm" . $this->farm . ".static.flickr.com/" . $this->server . "/" . $this->id . "_" . $this->originalsecret . "_o" . "." . $this->originalformat;
       } else {
-        $url = "http://farm" . $this->farm . ".static.flickr.com/" . $this->server . "/" . $this->id . "_" . $this->secret . $sizes[$size] . ".jpg";
+        $url = "https://farm" . $this->farm . ".static.flickr.com/" . $this->server . "/" . $this->id . "_" . $this->secret . $sizes[$size] . ".jpg";
       }
       return $url;
     }
